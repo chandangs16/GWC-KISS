@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import {Confirm,CardSection} from './common/index'
+import { Actions } from 'react-native-router-flux';
 
 class GetQuestion extends Component {
   state= {showModal: false};
@@ -184,6 +185,10 @@ class GetQuestion extends Component {
         </View>
         <CardSection>
           <Button title="Submit" onPress={() => this.setState({showModal: !this.state.showModal})}/>
+        </CardSection>
+
+        <CardSection>
+          <Button title="Go Back" onPress={() => Actions.studentHome()}/>
         </CardSection>
 
         <Confirm

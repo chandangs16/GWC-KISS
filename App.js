@@ -11,12 +11,12 @@ import {
   Text,
   View
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import Router from './src/Router';
 
 import GetQuestion from './src/components/GetQuestion';
 import StudentHome from './src/components/StudentHome';
 
-export default class App extends Component<{}> {
+class App extends Component {
   constructor(props) {
     super(props);
     
@@ -25,16 +25,16 @@ export default class App extends Component<{}> {
   render() {
     
     return (
-        <GetQuestion />
+        <Router />
 
     );
   }
 }
 
-const App = StackNavigator({
-  StudentHome: {screen: StudentHome},
-  GetQuestion: {screen: GetQuestion},
-});
+// const App = StackNavigator({
+//   StudentHome: {screen: StudentHome},
+//   GetQuestion: {screen: GetQuestion},
+// });
 
 // const styles = StyleSheet.create({
 //   container: {

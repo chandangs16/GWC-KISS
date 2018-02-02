@@ -4,11 +4,16 @@ import {View, Text } from 'react-native';
 
 
 import { CardSection,Button } from './common/index';
+import { Actions } from 'react-native-router-flux';
 
 class StudentHome extends Component {
     static navigationOptions = {
         title: "Welcome"
-      }
+    }
+
+    getQuestions() {
+        Actions.getQuestion();
+    }
 
     render() {
         const { navigate } = this.props.navigation;
@@ -24,7 +29,7 @@ class StudentHome extends Component {
                 <Text style={labelStyle}> Your present score is: </Text>
             </CardSection>
             <CardSection>
-             <Button onPress={() => navigate("GetQuestion", {screen: "Today's Question"})}>
+             <Button onPress={this.getQuestions.bind(this)}>
              Answer Today's Question
              </Button>
          </CardSection>

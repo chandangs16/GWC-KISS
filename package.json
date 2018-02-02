@@ -11,6 +11,7 @@
     "radio-button-react-native": "^1.1.6",
     "react": "16.2.0",
     "react-native": "0.52.2",
+    "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-submit-button": "^1.0.5",
     "react-navigation": "^1.0.0-beta.27"
