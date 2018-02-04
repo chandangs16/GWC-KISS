@@ -8,7 +8,7 @@ import StudentLogin from './components/StudentLogin';
 const AppRouter = () => {
     return (
       <Router>
-        {/* <Scene key="auth">
+         {/* <Scene key="auth">
           <Scene key="studentLogin" component={StudentLogin} title="Please Login" />
         </Scene> */}
   
@@ -19,7 +19,7 @@ const AppRouter = () => {
             title="Welcome"
             initial
           />
-          <Scene key="getQuestion" component={GetQuestion} title="Today's Question" />
+        <Scene key="getQuestion" component={GetQuestion} title="Today's Question"  />
         </Scene>
       </Router>
     );

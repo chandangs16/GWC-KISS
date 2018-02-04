@@ -24,7 +24,7 @@ class StudentLogin extends Component {
                     />
                 </CardSection>
 
-                {this.renderError()}
+                
                 <CardSection>
                     <Button>
                         Login

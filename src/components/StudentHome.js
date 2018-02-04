@@ -7,33 +7,36 @@ import { CardSection,Button } from './common/index';
 import { Actions } from 'react-native-router-flux';
 
 class StudentHome extends Component {
-    static navigationOptions = {
-        title: "Welcome"
-    }
+
 
     getQuestions() {
         Actions.getQuestion();
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         console.log(this.props);
         const {headerContentStyle, labelStyle, containerStyle} = styles;
         return (
             <View>
-            <CardSection >
-                <Text style={labelStyle}> Hello Chandan. </Text>
-            </CardSection>
+                <CardSection >
+                    <Text style={labelStyle}> Hello Chandan. </Text>
+                </CardSection>
 
-            <CardSection >
-                <Text style={labelStyle}> Your present score is: </Text>
-            </CardSection>
-            <CardSection>
-             <Button onPress={this.getQuestions.bind(this)}>
-             Answer Today's Question
-             </Button>
-         </CardSection>
+                <CardSection >
+                    <Text style={labelStyle}> Your present score is: </Text>
+                </CardSection>
 
+                <CardSection>
+                    <Button onPress={this.getQuestions.bind(this)}>
+                        CSE 500
+                    </Button>
+                </CardSection>
+
+                <CardSection>
+                    <Button onPress={this.getQuestions.bind(this)}>
+                        STE 101
+                    </Button>
+                </CardSection>
             </View>
         );
     }

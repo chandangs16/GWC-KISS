@@ -36,14 +36,10 @@ class GetQuestion extends Component {
     }; //this is how  you set up state
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: `${navigation.state.params.screen}`,
-    }
-  };
   
   componentDidMount()
   {
+    console.log(this.props);
     this.setState({showModal:false});
     this.fetchQuestion();
   }
@@ -136,9 +132,8 @@ class GetQuestion extends Component {
     this.setState({showModal: false});
 }
   render() {
-    const { state, navigate } = this.props.navigation;
-    
-   
+
+    console.log(this.props);
     if (this.state.isLoading) {
       return (
         <View style={styles.container}>
