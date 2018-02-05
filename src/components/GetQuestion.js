@@ -15,7 +15,7 @@ import {Confirm,CardSection} from './common/index'
 import { Actions } from 'react-native-router-flux';
 
 class GetQuestion extends Component {
-  state= {showModal: false};
+  
   constructor(props) {
     super(props);
     this.state = { 
@@ -34,6 +34,7 @@ class GetQuestion extends Component {
       isLoading: true,
       areQuestionsComplete: false,
       QuestionsCompleteMsg:'',
+      showModal: false
     }; //this is how  you set up state
   }
 
@@ -116,7 +117,11 @@ class GetQuestion extends Component {
             }
             else
             {
-            this.setState({question: data.question ,option1: data.option1 ,option2: data.option2 ,option3: data.option3,option4: data.option4, questionId: data.question_id, isLoading: false })
+              var questionString = data.question;
+              questionString = questionString.subStr(2);
+              questionString = questionString.slice(0, -2);
+
+            this.setState({question: questionString ,option1: data.option1 ,option2: data.option2 ,option3: data.option3,option4: data.option4, questionId: data.question_id, isLoading: false })
             //console.log("POST Response", "Response Body -> " + JSON.stringify(JSON.parse(responseData.body).input))
             }
         })
