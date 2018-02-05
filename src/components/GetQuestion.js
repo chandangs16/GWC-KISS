@@ -125,6 +125,39 @@ class GetQuestion extends Component {
   }
 
   onAccept() {
+    this.setState({isLoading:true, disableSubmit: true});
+      fetch('https://zaytz4lse8.execute-api.us-east-1.amazonaws.com/dev/checkanswer', {  
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            subject_code: 'CSE500',
+            answer: this.state.value,
+            question_id: this.state.questionId
+          })
+        })
+
+        .then((response) => response.json())
+        .then((responseData) => {
+            var data=JSON.parse(responseData.body).input;
+            console.log("requwst sent")
+            console.log(JSON.stringify(data));
+            var correct=data.correct;
+            var isAnswerCorrect=0;
+            var disableNext=true;
+            if(correct==1)
+            { 
+              isAnswerCorrect=1;
+              disableNext=false;
+            }
+
+            this.setState({optedAnswerMessage: data.message,disableNext:disableNext,isAnswerCorrect: isAnswerCorrect,isLoading:false})
+        })
+        .catch((error) => {
+        console.error(error);
+        });
     this.setState({showModal: false});
 }
 
@@ -173,13 +206,18 @@ class GetQuestion extends Component {
           <Text style={styles.radioButton }>{this.state.option4}</Text>
         </RadioButton>
         <Text style={styles.message}>{this.state.optedAnswerMessage}</Text>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}>
           
           <Button style={styles.buttons} onPress={this.submitAnswer.bind(this)} title="Submit" disabled={this.state.disableSubmit} color="#841584"/> 
           <Button style={styles.buttons} onPress={this.nextQuestion.bind(this)} title="Next" disabled={this.state.disableNext} color="#841584"/>
-        </View>
+        </View> */}
         <CardSection>
-          <Button title="Submit" onPress={() => this.setState({showModal: !this.state.showModal})}/>
+          <View style={styles.thumbnailContainerStyle}>
+          <Button title="Submit" onPress={() => this.setState({showModal: !this.state.showModal})} disabled={this.state.disableSubmit}/>
+          </View>
+          <View style={styles.headerContentStyle}>
+          <Button title="Next" onPress={this.nextQuestion.bind(this)}  disabled={this.state.disableNext}/>
+          </View>
         </CardSection>
 
         <CardSection>
@@ -216,6 +254,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft:10,
   },
+  thumbnailContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 180
+  },
+  headerContentStyle: {
+    flexDirection: 'column',
+    justifyContent: 'space-around'
+},
   message: {
 
     fontSize: 30,
