@@ -116,8 +116,7 @@ class GetQuestion extends Component {
             }
             else
             {
-            
-            this.setState({question:res ,option1: data.option1 ,option2: data.option2 ,option3: data.option3,option4: data.option4, questionId: data.question_id, isLoading: false })
+            this.setState({question:data.question,option1: data.option1 ,option2: data.option2 ,option3: data.option3,option4: data.option4, questionId: data.question_id, isLoading: false })
             //console.log("POST Response", "Response Body -> " + JSON.stringify(JSON.parse(responseData.body).input))
             }
         })
