@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import RadioButton from 'radio-button-react-native';
+import Katex from 'react-native-katex';
 import { Button, ActivityIndicator, TouchableOpacity } from 'react-native';
 //import SubmitButton from'react-native-submit-button';
 import {
@@ -142,7 +143,7 @@ class GetQuestion extends Component {
         .then((response) => response.json())
         .then((responseData) => {
             var data=JSON.parse(responseData.body).input;
-            console.log("requwst sent")
+            console.log("request sent")
             console.log(JSON.stringify(data));
             var correct=data.correct;
             var isAnswerCorrect=0;
@@ -187,9 +188,21 @@ class GetQuestion extends Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.question}>
+        {/* <Text style={styles.question}>
           {this.state.question}
-        </Text>
+        </Text> */}
+        <Katex 
+          expression={this.state.question}
+          style={styles.katex}
+          inlineStyle={inlineStyle}
+          displayMode={false}
+          throwOnError={false}
+          errorColor="#f00"
+          macros={{}}
+          colorIsTextColor={false}
+          onLoad={()=> this.setState({ loaded: true })}
+          onError={() => console.error('Error')}
+          />
         <RadioButton currentValue={this.state.value} style={styles.radioButton } value={1} onPress={this.OnAnswerSelect.bind(this)}>
           <Text style={styles.radioButton }>{this.state.option1}</Text>
         </RadioButton>
@@ -245,6 +258,9 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: '#FFFFFF',
   },
+  katex: {
+    flex: 1,
+  },
   question: {
     fontSize: 40,
     marginBottom:10,
@@ -282,5 +298,22 @@ const styles = StyleSheet.create({
 
   }
 });
+
+const inlineStyle =`
+html, body {
+  display: flex;
+  background-color: #fafafa;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.katex {
+  font-size: 4em;
+  margin: 0;
+  display: flex;
+}
+`;
 
 export default GetQuestion;

@@ -9,6 +9,7 @@ import { Actions } from 'react-native-router-flux';
 class StudentHome extends Component {
 
 
+
     getQuestions() {
         Actions.getQuestion();
     }
