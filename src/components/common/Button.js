@@ -25,10 +25,10 @@ const styles = {
     buttonSTyle: {
         flex: 1, // expand to fill as much content as possible.
         alignSelf: 'stretch',
-        backgroundColor: '#800000',
+        backgroundColor: '#4591FA',
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#800000',
+        borderColor: '#4591FA',
         marginLeft: 5,
         marginRight: 5
 

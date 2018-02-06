@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 import {Confirm,CardSection} from './common/index'
 import { Actions } from 'react-native-router-flux';
@@ -210,20 +211,22 @@ class GetQuestion extends Component {
           /> 
           
 
-        <RadioButton currentValue={this.state.value} style={styles.radioButton } value={1} onPress={this.OnAnswerSelect.bind(this)}>
-          <Text style={styles.radioButton }>{this.state.option1}</Text>
+          <RadioButton currentValue={this.state.value} style={styles.radioButton } value={1} onPress={this.OnAnswerSelect.bind(this)}>
+          <Katex  style={styles.katex} expression={this.state.question} />
         </RadioButton>
                       
         <RadioButton currentValue={this.state.value} value={2} style={styles.radioButton } onPress={this.OnAnswerSelect.bind(this)}>
-          <Text style={styles.radioButton }>{this.state.option2}</Text>
+          <Katex  style={styles.katex} expression={this.state.option2} />
         </RadioButton>
                  
         <RadioButton currentValue={this.state.value} value={3} style={styles.radioButton} onPress={this.OnAnswerSelect.bind(this)}>
-          <Text style={styles.radioButton }>{this.state.option3}</Text>
+          {/* <Text style={styles.radioButton }>{this.state.option3}</Text> */}
+          <Katex  style={styles.katex} expression={this.state.option3} />
         </RadioButton>
 
          <RadioButton currentValue={this.state.value} value={4}  style={styles.radioButton } onPress={this.OnAnswerSelect.bind(this)}>
-          <Text style={styles.radioButton }>{this.state.option4}</Text>
+          {/* <Text style={styles.radioButton }>{this.state.option4}</Text> */}
+          <Katex  style={styles.katex} expression={this.state.option4} />
         </RadioButton>
         <Text style={styles.message}>{this.state.optedAnswerMessage}</Text>
         {/* <View style={{flexDirection: 'row'}}>
@@ -277,7 +280,7 @@ const styles = StyleSheet.create({
   radioButton: {
     fontSize: 20,
     marginBottom: 10,
-    marginLeft:10,
+    marginLeft: 10
   },
   thumbnailContainerStyle: {
     justifyContent: 'center',

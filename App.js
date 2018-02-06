@@ -11,7 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-import Router from './src/Router';
+import AppRouter from './src/Router';
 
 import GetQuestion from './src/components/GetQuestion';
 import StudentHome from './src/components/StudentHome';
@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     
     return (
-        <Router />
+        <AppRouter />
 
     );
   }
