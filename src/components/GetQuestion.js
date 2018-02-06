@@ -207,7 +207,9 @@ class GetQuestion extends Component {
           colorIsTextColor={false}
           onLoad={()=> this.setState({ loaded: true })}
           onError={() => console.error('Error')}
-          />
+          /> 
+          
+
         <RadioButton currentValue={this.state.value} style={styles.radioButton } value={1} onPress={this.OnAnswerSelect.bind(this)}>
           <Text style={styles.radioButton }>{this.state.option1}</Text>
         </RadioButton>
@@ -229,17 +231,19 @@ class GetQuestion extends Component {
           <Button style={styles.buttons} onPress={this.submitAnswer.bind(this)} title="Submit" disabled={this.state.disableSubmit} color="#841584"/> 
           <Button style={styles.buttons} onPress={this.nextQuestion.bind(this)} title="Next" disabled={this.state.disableNext} color="#841584"/>
         </View> */}
-        <CardSection>
-          <View style={styles.thumbnailContainerStyle}>
+        <View>
+        <CardSection style={styles.cardSectionStyle}>
+          {/* <View style={styles.thumbnailContainerStyle}> */}
           <Button title="Submit" onPress={() => this.setState({showModal: !this.state.showModal})} disabled={this.state.disableSubmit}/>
-          </View>
-          <View style={styles.headerContentStyle}>
+          {/* </View> */}
+          {/* <View style={styles.headerContentStyle}> */}
           <Button title="Next" onPress={this.nextQuestion.bind(this)}  disabled={this.state.disableNext}/>
-          </View>
+          {/* </View> */}
         </CardSection>
+        </View>
 
-        <CardSection>
-          <Button title="Go Back" onPress={() => Actions.studentHome()}/>
+        <CardSection style={styles.cardSectionStyle2}>
+          <Button  title="Go Back" onPress={() => Actions.studentHome()}/>
         </CardSection>
 
         <Confirm
@@ -260,7 +264,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 40,
+    padding: 20,
     backgroundColor: '#FFFFFF',
   },
   katex: {
@@ -279,11 +283,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
-    marginRight: 180
+    marginRight: 200
   },
   headerContentStyle: {
     flexDirection: 'column',
     justifyContent: 'space-around'
+},
+cardSectionStyle: {
+  justifyContent: 'space-around',
+},
+cardSectionStyle2: {
+  margin: 20,
+  justifyContent: 'center',
 },
   message: {
 
@@ -291,7 +302,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttons:{
-      padding:30,
+      padding:20,
        borderRadius:5,
        marginBottom: 20,
   },
@@ -307,7 +318,7 @@ const styles = StyleSheet.create({
 const inlineStyle =`
 html, body {
   display: flex;
-  background-color: #fafafa;
+  background-color: #FFFFFF;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -315,7 +326,7 @@ html, body {
   padding: 0;
 }
 .katex {
-  font-size: 1.6em;
+  font-size: 1.3em;
   margin: 0;
   display: flex;
 }
