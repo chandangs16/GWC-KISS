@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import RadioButton from 'radio-button-react-native';
 import Katex from 'react-native-katex';
 import { Button, ActivityIndicator, TouchableOpacity } from 'react-native';
-//import SubmitButton from'react-native-submit-button';
 import {
   Platform,
   StyleSheet,
@@ -127,8 +126,6 @@ class GetQuestion extends Component {
             }
         })
         .done();
-        
-
   }
 
   onAccept() {
@@ -212,7 +209,7 @@ class GetQuestion extends Component {
           
 
           <RadioButton currentValue={this.state.value} style={styles.radioButton } value={1} onPress={this.OnAnswerSelect.bind(this)}>
-          <Katex  style={styles.katex} expression={this.state.question} />
+          <Katex  style={styles.katex} expression={this.state.option1} />
         </RadioButton>
                       
         <RadioButton currentValue={this.state.value} value={2} style={styles.radioButton } onPress={this.OnAnswerSelect.bind(this)}>
@@ -229,11 +226,6 @@ class GetQuestion extends Component {
           <Katex  style={styles.katex} expression={this.state.option4} />
         </RadioButton>
         <Text style={styles.message}>{this.state.optedAnswerMessage}</Text>
-        {/* <View style={{flexDirection: 'row'}}>
-          
-          <Button style={styles.buttons} onPress={this.submitAnswer.bind(this)} title="Submit" disabled={this.state.disableSubmit} color="#841584"/> 
-          <Button style={styles.buttons} onPress={this.nextQuestion.bind(this)} title="Next" disabled={this.state.disableNext} color="#841584"/>
-        </View> */}
         <View>
         <CardSection style={styles.cardSectionStyle}>
           {/* <View style={styles.thumbnailContainerStyle}> */}
@@ -303,6 +295,7 @@ cardSectionStyle2: {
 
     fontSize: 30,
     marginBottom: 10,
+    justifyContent: 'center'
   },
   buttons:{
       padding:20,
