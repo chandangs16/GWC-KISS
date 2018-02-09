@@ -16,7 +16,7 @@
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-submit-button": "^1.0.5",
-    "react-navigation": "^1.0.0-beta.27"
+    "react-navigation": "^1.0.3"
   },
   "devDependencies": {
     "babel-jest": "22.1.0",
