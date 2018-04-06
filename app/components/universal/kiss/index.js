@@ -26,8 +26,8 @@ export class KissUniverse extends Component {
       });
   constructor(props) {
     super(props);
-    this.state = { 
-      question: '', 
+    this.state = {
+      question: '',
       option1: '',
       option2: '',
       option3: '',
@@ -52,7 +52,7 @@ export class KissUniverse extends Component {
     //this.checkPushNotifications = this.checkPushNotifications.bind(this);
   }
 
-  
+
   componentDidMount() {
     this.setState({ showModal: false });
     this.fetchQuestion();
@@ -62,21 +62,129 @@ export class KissUniverse extends Component {
     this.setState({ isLoading: true, disableSubmit: true, disableNext: true, optedAnswerMessage: '', value: 0 })
     this.fetchQuestion();
   }
-  
+
   OnAnswerSelect(value) {
     this.setState({ optedAnswer: value, value: value, disableSubmit: false })
   }
 
+  fetchCharityCredits(){
+
+    this.context.getTokens().then(response => {
+      this.setState({ tokens_Kiss: response});
+      console.log("charity request for  ", this.props.navigation.state.params.data);
+      let apiService = new ApiService("amazonaws.com", this.state.tokens_Kiss);
+      console.log("request sent for checking charity");
+      apiService.post("/prod/getcharity", {
+        "subject_code": this.props.navigation.state.params.data,
+      }, { "service": "", "region": "" }, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }).then(responseData => {
+
+          var raw_data = JSON.parse(responseData.body);
+
+          var data = raw_data.message;
+          var status = raw_data.success;
+          console.log("raw data:"+raw_data);
+          console.log("resp data:"+responseData);
+
+
+          if(status == 0)
+          {
+
+            var c_label = [];
+            var c_id = [];
+            var c_final = [];
+
+            var options = data.toString().split(",");
+
+            for(var i = 0; i < options.length; i++)
+            {
+                if(i % 2 != 0)
+                {
+                  c_label.push(options[i])
+                }
+                else
+                {
+                  c_id.push(options[i])
+                }
+            }
+            for (var i = 0; i < options.length/2; i++)
+            {
+              c_final.push({"label": c_label[i], "value": parseInt(c_id[i])})
+            }
+
+            this.setState(({isCharityLoading:false, charityList:c_final, isLoading: false}));
+            console.log(" List ", this.state.charityList);
+          }
+
+          else
+          {
+            console.log("else part")
+             this.setState(({isCharityPresent:false}));
+             this.fetchQuestion();
+          }
+
+          //this.setState({ optedAnswerMessage: data.message, disableNext: disableNext, isAnswerCorrect: isAnswerCorrect, isLoading: false })
+        }).catch(error => {
+          console.error(error);
+          throw error;
+        });
+    }).catch(error => {
+      console.error("GetQustion promis ", error);
+      throw error;
+    });
+  }
+
+  onCharityAccept() {
+    console.log("DBGG @1");
+    // this.context.getTokens().then(response => {
+
+    //   this.setState({ tokens_Kiss: response, course:this.props.navigation.state.params.data });
+    //   console.log("Submit Charity for course ", this.props.navigation.state.params.data);
+    //   console.log("charity id is:"+this.state.charity_id);
+    //   let apiService = new ApiService("amazonaws.com", this.state.tokens_Kiss);
+    //   apiService.post("/prod/submitcharity", { "subject_code": this.props.navigation.state.params.data,"charity_id":this.state.charity_id }, { "service": "", "region": "" }, {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   })
+    //     .then(responseData => {
+    //       console.log(responseData);
+    //       var raw_data = JSON.parse(responseData.body);
+    //       console.log(JSON.stringify(raw_data));
+    //       var data = raw_data.message;
+    //       console.log("Message from submit charity", data);
+    //     })
+    //     .catch(error => {
+    //       console.error(error);
+    //       throw error;
+    //     });
+    // }).catch(error => {
+    //   console.error("Submit charity ", error);
+    //   throw error;
+    // });
+
+
+    this.fetchQuestion();
+   //this.setState({ showConfirm: false , isCharityPresent:false, showModal:false});
+
+  }
+
+  onCharityDecline() {
+    this.setState({ showConfirm: false });
+  }
+
+
   submitAnswer() {
     this.setState({ isLoading: true, disableSubmit: true });
     this.state.tokens_Kiss = this.context.getTokens();
-    let apiService = new ApiService("https://6jqf80vtta.execute-api.ca-central-1.amazonaws.com/prod", this.state.tokens_Kiss);
+    let apiService = new ApiService("amazonaws.com/prod", this.state.tokens_Kiss);
     console.log("subject code chandan:" + this.props.navigation.state.params.data);
     apiService.post("/dev/checkanswer", {
       "subject_code": this.props.navigation.state.params.data,
       "answer": this.state.value,
       "question_id": this.state.questionId
-    }, { "service": "execute-api", "region": "ca-central-1" }, {
+    }, { "service": "", "region": "" }, {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       })
@@ -108,8 +216,8 @@ export class KissUniverse extends Component {
       //console.log("GetTokens() ", response);
       this.setState({ tokens_Kiss: response, course:this.props.navigation.state.params.data });
       console.log("Fetch Question for course ", this.props.navigation.state.params.data);
-      let apiService = new ApiService("https://6jqf80vtta.execute-api.ca-central-1.amazonaws.com", this.state.tokens_Kiss);
-      apiService.post("/prod/getquestion", { "subject_code": this.props.navigation.state.params.data }, { "service": "execute-api", "region": "ca-central-1" }, {
+      let apiService = new ApiService("amazonaws.com", this.state.tokens_Kiss);
+      apiService.post("/prod/getquestion", { "subject_code": this.props.navigation.state.params.data }, { "service": "", "region": "" }, {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       })
@@ -159,14 +267,14 @@ export class KissUniverse extends Component {
   }
 
   onAccept() {
-    let apiService = new ApiService("https://6jqf80vtta.execute-api.ca-central-1.amazonaws.com", this.state.tokens_Kiss);
+    let apiService = new ApiService("amazonaws.com", this.state.tokens_Kiss);
     console.log("subject code chandan:" + this.props.navigation.state.params.data);
     console.log("question id" + this.state.questionId);
     apiService.post("/prod/checkanswer", {
       "subject_code": this.props.navigation.state.params.data,
       "answer": this.state.value,
       "question_id": this.state.questionId
-    }, { "service": "execute-api", "region": "ca-central-1" }, {
+    }, { "service": "", "region": "" }, {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     })
@@ -202,7 +310,7 @@ export class KissUniverse extends Component {
   render() {
     const { navigate } = this.props.navigation;
     console.log(JSON.stringify(this.props));
-     
+
     if (this.state.isLoading) {
       return (
         <View style={styles.container}>
@@ -210,7 +318,7 @@ export class KissUniverse extends Component {
         </View>
       );
     }
-    
+
     if (this.state.areQuestionsComplete) {
       return (
         <View>
@@ -225,7 +333,7 @@ export class KissUniverse extends Component {
       {/* <Text style={styles.question}>
         {this.state.question}
       </Text> */}
-      <Katex 
+      <Katex
         expression={this.state.question}
         style={styles.katex}
         inlineStyle={inlineStyle}
@@ -236,7 +344,7 @@ export class KissUniverse extends Component {
         colorIsTextColor={false}
         onLoad={()=> this.setState({ loaded: true })}
         onError={() => console.error('Error')}
-        /> 
+        />
         <View style={{
       flex: 1,
       flexDirection: 'column',
@@ -248,13 +356,13 @@ export class KissUniverse extends Component {
         <Katex  style={styles.katex} expression={this.state.option1} inlineStyle={optionStyle}  />
       </RadioButton>
 
-      
-          
+
+
       <RadioButton currentValue={this.state.value} value={2}  onPress={this.OnAnswerSelect.bind(this)}>
         <Katex  style={styles.katex} expression={this.state.option2} inlineStyle={optionStyle} />
       </RadioButton>
-      
-               
+
+
       <RadioButton currentValue={this.state.value} value={3} style={styles.radioButton} onPress={this.OnAnswerSelect.bind(this)}>
         <Katex  style={styles.katex} expression={this.state.option3} inlineStyle={optionStyle} />
       </RadioButton>
@@ -262,7 +370,7 @@ export class KissUniverse extends Component {
       <RadioButton currentValue={this.state.value} value={4}  style={styles.radioButton } onPress={this.OnAnswerSelect.bind(this)}>
         <Katex  style={styles.katex} expression={this.state.option4}inlineStyle={optionStyle} />
       </RadioButton>
-      
+
       </View>
       <Text style={styles.message}>{this.state.optedAnswerMessage}</Text>
       <View>
