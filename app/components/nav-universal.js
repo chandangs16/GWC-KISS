@@ -89,13 +89,13 @@ export class Universal extends React.Component {
     });
   }
 
- 
+
 
   componentDidMount() {
     const { navigate } = this.props.navigation;
     console.log("component mounted");
     this.getCourses();
-    
+
     var PushNotification = require('react-native-push-notification');
     console.log(this.props);
     this.context.getTokens().then(response => {
@@ -171,8 +171,8 @@ export class Universal extends React.Component {
               })
             })
           }
-          
-          
+
+
           //User clicked on the notification. Navigate to the Kiss questions (Kiss Universe ) page
           if(Platform.OS == 'ios')
           {
@@ -182,7 +182,7 @@ export class Universal extends React.Component {
           {
             navigate("KissUniverse", { data: notification.message });
           }
-         
+
         },
         permissions: {
           alert: true,
@@ -240,10 +240,10 @@ export class Universal extends React.Component {
 
         console.log("course is :"+course);
         return(
-          
+
           <CardSection>
               <Button onPress={() => navigate("KissUniverse", { data: course })} title={""+course+""}>
-                
+
                     </Button>
             </CardSection>
         )
@@ -278,6 +278,11 @@ export class Universal extends React.Component {
             {this.emptyCourses}
 
           </View>
+
+          <CardSection>
+          <Button onPress={() => navigate("Profile", { data: "Data" })} title={"Profile"}>
+          </Button>
+        </CardSection>
         <Logout />
       </ScrollView>
     )
